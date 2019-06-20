@@ -1,8 +1,9 @@
 #pragma once
 
 #include "GAPI.h"
-
+#include "GNode.h"
 #include <string>
+#include <list>
 
 class GNode;
 
@@ -47,4 +48,6 @@ public:
     ReturnCode load(const std::string& iFileName);
     
 private:
+	std::list<GNode> m_graphNodes;
+	bool checkNodeName(std::string name);
 };

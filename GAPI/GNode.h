@@ -17,6 +17,7 @@ public:
     ~GNode(void);
     
     const std::string& getName() {return m_name;}
+	bool GNode::operator==(const GNode &other) const;
     
     //
     //Connect this node to given ipNode
@@ -43,5 +44,5 @@ private:
 	//int m_counter;
 	bool m_connected;
 	std::list<GNode> m_conn_Nodes;
-	std::list<int>::iterator it;
+	//std::list<int>::iterator it;
 };
