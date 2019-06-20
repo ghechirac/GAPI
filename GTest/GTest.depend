@@ -1,0 +1,44 @@
+# depslib dependency file v1.0
+1269796802 source:e:\personalfolders\ionut\courses\cplusplus\gtest\testgraph.cpp
+	"TestGraph.h"
+	"../GAPI/GGraph.h"
+	"../GAPI/GNode.h"
+
+1269931138 e:\personalfolders\ionut\courses\cplusplus\gtest\testgraph.h
+	"TestCase.h"
+
+1262560270 e:\personalfolders\ionut\courses\cplusplus\gtest\testcase.h
+	<stdio.h>
+	<string>
+
+1269932534 e:\personalfolders\ionut\courses\cplusplus\gapi\ggraph.h
+	"GAPI.h"
+	<string>
+
+1550239258 e:\personalfolders\ionut\courses\cplusplus\gapi\gapi.h
+
+1269932344 e:\personalfolders\ionut\courses\cplusplus\gapi\gnode.h
+	"GAPI.h"
+	<string>
+
+1269931768 source:e:\personalfolders\ionut\courses\cplusplus\gtest\testnode.cpp
+	"TestNode.h"
+	"../GAPI/GNode.h"
+
+1269798034 e:\personalfolders\ionut\courses\cplusplus\gtest\testnode.h
+	"TestCase.h"
+
+1269931052 source:e:\personalfolders\ionut\courses\cplusplus\gtest\testobjecttracker.cpp
+	"TestObjectTracker.h"
+	"../GAPI/GNode.h"
+	"../GAPI/GGraph.h"
+
+1269932192 e:\personalfolders\ionut\courses\cplusplus\gtest\testobjecttracker.h
+	"TestCase.h"
+
+1560886395 source:e:\personalfolders\ionut\courses\cplusplus\gtest\main.cpp
+	"stdio.h"
+	"TestGraph.h"
+	"TestNode.h"
+	"TestObjectTracker.h"
+
