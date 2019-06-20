@@ -49,5 +49,5 @@ public:
     
 private:
 	std::list<GNode> m_graphNodes;
-	bool checkNodeName(std::string name);
+	bool nodeNameInGraph(std::string name);
 };

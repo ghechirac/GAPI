@@ -12,7 +12,7 @@ GGraph::~GGraph(void)
 
 GNode* GGraph::addNode(const std::string& iName)
 {
-	if (iName.empty()  || checkNodeName(iName)) 
+	if (iName.empty() || nodeNameInGraph(iName)) 
 	{
 		return NULL;
 	}
@@ -37,16 +37,12 @@ GNode* GGraph::getNode(const std::string& iName)
 ReturnCode GGraph::removeNode(const std::string& iName)
 {
 	ReturnCode rc;
-	//if (!iName.empty() && checkNodeName(iName)) 
-	//{
 
-
-	//}
 	if (iName.empty())
 	{
 		rc = RC_ParameterError;
 	}
-	else if (!checkNodeName(iName))
+	else if (!nodeNameInGraph(iName))
 	{
 		rc = RC_ValueError;
 	}
@@ -77,7 +73,7 @@ int GGraph::getNumNodes()
     return m_graphNodes.size();
 }
 
-bool GGraph::checkNodeName(std::string name)
+bool GGraph::nodeNameInGraph(std::string name)
 {
 	for (auto itr = m_graphNodes.begin(); itr != m_graphNodes.end(); itr++)
 	{

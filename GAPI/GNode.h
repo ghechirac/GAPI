@@ -41,8 +41,6 @@ public:
     int getNumConnectedTo();
 private:
     std::string m_name;
-	//int m_counter;
 	bool m_connected;
 	std::list<GNode> m_conn_Nodes;
-	//std::list<int>::iterator it;
 };

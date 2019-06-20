@@ -14,10 +14,10 @@ TestGraph::~TestGraph(void)
 void TestGraph::run()
 {
     RUN_TEST(testConstruct);
-    //RUN_TEST(testAddNode);
-    //RUN_TEST(testRemoveNode);
-    //RUN_TEST(testNodeAccess);
-    //RUN_TEST(testSaveLoad);
+    RUN_TEST(testAddNode);
+    RUN_TEST(testRemoveNode);
+    RUN_TEST(testNodeAccess);
+    RUN_TEST(testSaveLoad);
 }
 
 //

@@ -17,7 +17,7 @@ void TestNode::run()
     RUN_TEST(testConstruct);
 	RUN_TEST(testConnect);
     RUN_TEST(testDisconnect);
-	//RUN_TEST(testDisconnectAll);
+	RUN_TEST(testDisconnectAll);
 }
 
 int TestNode::setUp(const std::string& iTestName)
