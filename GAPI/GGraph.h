@@ -50,4 +50,5 @@ public:
 private:
 	std::list<GNode> m_graphNodes;
 	bool nodeNameInGraph(std::string name);
+	std::string m_name;
 };

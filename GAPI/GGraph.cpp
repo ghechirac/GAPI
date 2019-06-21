@@ -1,8 +1,12 @@
 #include "GGraph.h"
 #include <algorithm>
+#include <fstream>
+#include <iostream>
+#include <string>
 
 GGraph::GGraph(const std::string &iName)
 {
+	this->m_name = iName;
 }
 
 GGraph::~GGraph(void)
@@ -12,14 +16,14 @@ GGraph::~GGraph(void)
 
 GNode* GGraph::addNode(const std::string& iName)
 {
-	if (iName.empty() || nodeNameInGraph(iName)) 
+	if (iName.empty() || nodeNameInGraph(iName))
 	{
 		return NULL;
 	}
 
 	GNode *currentNode = new GNode(iName);
 	m_graphNodes.push_back(*currentNode);
-    return currentNode;
+	return currentNode;
 }
 
 GNode* GGraph::getNode(const std::string& iName)
@@ -55,22 +59,77 @@ ReturnCode GGraph::removeNode(const std::string& iName)
 			rc = RC_OK;
 		}
 	}
-    return rc;
+	return rc;
 }
 
 ReturnCode GGraph::save(const std::string& iFileName)
 {
-    return RC_NotImplemented;
+	std::ofstream myfile;
+	try
+	{
+		myfile.open(iFileName);
+		myfile << "*" + this->m_name + "\n";
+		for (auto itr = m_graphNodes.begin(); itr != m_graphNodes.end(); itr++)
+		{
+			myfile << "@" + itr->getName() + "\n";
+			for (auto n_itr = m_graphNodes.begin(); n_itr != m_graphNodes.end(); n_itr++)
+			{
+				myfile << n_itr->getName() + "\n";
+			}
+		}
+		myfile.close();
+
+	}
+	catch (int e)
+	{
+		return RC_ParameterError;
+	}
+	
+	return RC_OK;
 }
 
 ReturnCode GGraph::load(const std::string& iFileName)
 {
-    return RC_NotImplemented;
+	std::string line;
+	std::ifstream myfile(iFileName);
+	if (myfile.is_open())
+	{
+		GGraph *pGraph;
+		GNode *pParentNode;
+		while (getline(myfile, line))
+		{
+			//cout << line << '\n';
+
+			if(line.at(0) == '*')
+			{
+				std::string graphName = line.substr(1, line.size());
+				pGraph = new GGraph(graphName);
+			}
+			else if(line.at(0) == '@')
+			{
+				std::string nodeName = line.substr(1, line.size());
+				pParentNode = new GNode(nodeName);
+				pGraph->addNode(pParentNode->getName());
+			}
+			else
+			{
+				GNode *tmpNode = new GNode(line);
+				pParentNode->connect(tmpNode);
+			}
+		}
+		myfile.close();
+		if (pGraph == this) 
+		{
+			return RC_OK;
+		}
+	}
+	 return RC_ParameterError;
+	
 }
 
 int GGraph::getNumNodes()
 {
-    return m_graphNodes.size();
+	return m_graphNodes.size();
 }
 
 bool GGraph::nodeNameInGraph(std::string name)
