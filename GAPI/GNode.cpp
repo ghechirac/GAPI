@@ -18,7 +18,7 @@ ReturnCode GNode::connect(GNode *ipNode)
 	{
 		return rc;
 	}
-	if (ipNode->m_connected == true)
+	if (ipNode->m_connected == true && ipNode->getName() == this->getName())
 	{
 		rc = RC_ValueError;
 	}
@@ -27,6 +27,7 @@ ReturnCode GNode::connect(GNode *ipNode)
 		ipNode->m_connected = true;
 		m_conn_Nodes.push_back(*ipNode);
 		rc = RC_OK;
+		this->m_conn_Nodes = m_conn_Nodes;
 	}
 
 	return rc;
@@ -71,4 +72,10 @@ ReturnCode GNode::disconnectAll()
 int GNode::getNumConnectedTo()
 {
     return m_conn_Nodes.size();
+}
+
+
+std::list<GNode> GNode::getConnectedNodes()
+{
+	return m_conn_Nodes;
 }

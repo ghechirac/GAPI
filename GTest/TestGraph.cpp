@@ -20,7 +20,7 @@ void TestGraph::run()
     RUN_TEST(testConstruct);
     RUN_TEST(testAddNode);
     RUN_TEST(testRemoveNode);
- //   RUN_TEST(testNodeAccess);
+ 	RUN_TEST(testNodeAccess);
     RUN_TEST(testSaveLoad);
 }
 
@@ -93,51 +93,47 @@ void TestGraph::testRemoveNode()
 void TestGraph::testNodeAccess()
 {
     GGraph *pGraph = new GGraph("ga");
-    ASSERT_EQUALS(pGraph->getNode("na"), NULL);
+	GNode *tmpNode = pGraph->getNode("na");
+    ASSERT_EQUALS(tmpNode, NULL);
     GNode *pNode = pGraph->addNode("na");
-    ASSERT_EQUALS(pGraph->getNode("na"), pNode);
+	tmpNode = pGraph->getNode("na");
+    ASSERT_EQUALS(tmpNode, pNode);
 }
 
 void TestGraph::testSaveLoad()
 {
 	GGraph *pGraph = new GGraph("graph_1");
 
-	GNode *pNode_1 = new GNode("node_1");
-	GNode *pNode_2 = new GNode("node_2");
-	GNode *pNode_3 = new GNode("node_3");
-	GNode *pNode_4 = new GNode("node_4");
-	GNode *pNode_5 = new GNode("node_5");
+	GNode *pNode_1 = pGraph->addNode("node_1");
+	GNode *pNode_2 = pGraph->addNode("node_2");
+	GNode *pNode_3 = pGraph->addNode("node_3");
+	GNode *pNode_4 = pGraph->addNode("node_4");
+	GNode *pNode_5 = pGraph->addNode("node_5");
+	
+	pGraph->getNode(pNode_1->getName())->connect(pNode_2);
+	pGraph->getNode(pNode_1->getName())->connect(pNode_3);
+	pGraph->getNode(pNode_1->getName())->connect(pNode_4);
+	pGraph->getNode(pNode_1->getName())->connect(pNode_5);
 
-	pGraph->addNode("node_1");
-	pGraph->addNode("node_2");
-	pGraph->addNode("node_3");
-	pGraph->addNode("node_4");
-	pGraph->addNode("node_5");
+	pGraph->getNode(pNode_2->getName())->connect(pNode_1);
+	pGraph->getNode(pNode_2->getName())->connect(pNode_3);
+	pGraph->getNode(pNode_2->getName())->connect(pNode_4);
+	pGraph->getNode(pNode_2->getName())->connect(pNode_5);
 
-	pNode_1->connect(pNode_2);
-	pNode_1->connect(pNode_3);
-	pNode_1->connect(pNode_4);
-	pNode_1->connect(pNode_5);
+	pGraph->getNode(pNode_3->getName())->connect(pNode_2);
+	pGraph->getNode(pNode_3->getName())->connect(pNode_1);
+	pGraph->getNode(pNode_3->getName())->connect(pNode_4);
+	pGraph->getNode(pNode_3->getName())->connect(pNode_5);
 
-	pNode_2->connect(pNode_1);
-	pNode_2->connect(pNode_3);
-	pNode_2->connect(pNode_4);
-	pNode_2->connect(pNode_5);
+	pGraph->getNode(pNode_4->getName())->connect(pNode_2);
+	pGraph->getNode(pNode_4->getName())->connect(pNode_3);
+	pGraph->getNode(pNode_4->getName())->connect(pNode_1);
+	pGraph->getNode(pNode_4->getName())->connect(pNode_5);
 
-	pNode_3->connect(pNode_2);
-	pNode_3->connect(pNode_1);
-	pNode_3->connect(pNode_4);
-	pNode_3->connect(pNode_5);
-
-	pNode_4->connect(pNode_2);
-	pNode_4->connect(pNode_3);
-	pNode_4->connect(pNode_1);
-	pNode_4->connect(pNode_5);
-
-	pNode_5->connect(pNode_2);
-	pNode_5->connect(pNode_3);
-	pNode_5->connect(pNode_4);
-	pNode_5->connect(pNode_1);
+	pGraph->getNode(pNode_5->getName())->connect(pNode_2);
+	pGraph->getNode(pNode_5->getName())->connect(pNode_3);
+	pGraph->getNode(pNode_5->getName())->connect(pNode_4);
+	pGraph->getNode(pNode_5->getName())->connect(pNode_1);
 
 	std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::time_point::clock().now());
 

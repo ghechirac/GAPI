@@ -48,6 +48,12 @@ void TestNode::testConnect()
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 1);
     ASSERT_EQUALS(pNode->connect(pNa), RC_ValueError);
     ASSERT_EQUALS(pNode->getNumConnectedTo(), 1);
+	GNode *pNa_1 = new GNode("na_1");
+	ASSERT_EQUALS(pNode->connect(pNa_1), RC_OK);
+	ASSERT_EQUALS(pNode->getConnectedNodes().size(),2)
+	GNode *pNa_2 = new GNode("na_2");
+	ASSERT_EQUALS(pNode->connect(pNa_2), RC_OK);
+
 }
 
 void TestNode::testDisconnect()

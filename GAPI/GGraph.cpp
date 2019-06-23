@@ -72,7 +72,8 @@ ReturnCode GGraph::save(const std::string& iFileName)
 		for (auto itr = m_graphNodes.begin(); itr != m_graphNodes.end(); itr++)
 		{
 			myfile << "@" + itr->getName() + "\n";
-			for (auto n_itr = m_graphNodes.begin(); n_itr != m_graphNodes.end(); n_itr++)
+			std::list<GNode> myList = itr->getConnectedNodes();
+			for (auto n_itr = myList.begin(); n_itr != myList.end(); n_itr++)
 			{
 				myfile << n_itr->getName() + "\n";
 			}
@@ -97,9 +98,7 @@ ReturnCode GGraph::load(const std::string& iFileName)
 		GGraph *pGraph;
 		GNode *pParentNode;
 		while (getline(myfile, line))
-		{
-			//cout << line << '\n';
-
+		{	
 			if(line.at(0) == '*')
 			{
 				std::string graphName = line.substr(1, line.size());
@@ -108,17 +107,16 @@ ReturnCode GGraph::load(const std::string& iFileName)
 			else if(line.at(0) == '@')
 			{
 				std::string nodeName = line.substr(1, line.size());
-				pParentNode = new GNode(nodeName);
-				pGraph->addNode(pParentNode->getName());
+				pParentNode = pGraph->addNode(nodeName);
 			}
 			else
 			{
 				GNode *tmpNode = new GNode(line);
-				pParentNode->connect(tmpNode);
+				pGraph->getNode(pParentNode->getName())->connect(tmpNode);
 			}
 		}
 		myfile.close();
-		if (pGraph == this) 
+		if (pGraph != NULL && pGraph->m_graphNodes.size() > 0) 
 		{
 			return RC_OK;
 		}
@@ -143,5 +141,8 @@ bool GGraph::nodeNameInGraph(std::string name)
 	}
 	return false;
 }
-
+bool GGraph::operator==(const GGraph &other) const
+{
+	return (m_name == other.m_name && m_graphNodes == other.m_graphNodes);
+}
 

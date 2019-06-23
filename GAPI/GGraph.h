@@ -16,6 +16,7 @@ public:
     GGraph(const std::string &iName);
     ~GGraph(void);
 
+	bool GGraph::operator==(const GGraph &other) const;
     //
     //Create a new node object and store it in graph for future access
     //Created object is returned to the caller as well

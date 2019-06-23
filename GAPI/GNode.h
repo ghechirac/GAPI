@@ -38,7 +38,9 @@ public:
     //
     //Get number of nodes which this node connects to
     //
-    int getNumConnectedTo();
+    int getNumConnectedTo();	
+	std::list<GNode> getConnectedNodes();
+	
 private:
     std::string m_name;
 	bool m_connected;
