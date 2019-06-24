@@ -16,6 +16,9 @@ public:
     GNode(const std::string &iName);
     ~GNode(void);
     
+	int getNumConnectedTo();
+	std::list<GNode> getConnectedNodes();
+
     const std::string& getName() {return m_name;}
 	bool GNode::operator==(const GNode &other) const;
     
@@ -38,8 +41,7 @@ public:
     //
     //Get number of nodes which this node connects to
     //
-    int getNumConnectedTo();	
-	std::list<GNode> getConnectedNodes();
+ 
 	
 private:
     std::string m_name;

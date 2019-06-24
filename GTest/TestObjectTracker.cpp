@@ -70,7 +70,27 @@ void TestObjectTracker::testGraph()
 
 void TestObjectTracker::testNodeWithConnection()
 {
-	//TO BE IMPLEMENTED
+	const std::string rootNode = "root_node";
+	//GGraph *pGraph = new GGraph("graph_1");
+
+	GNode *pNode_1 = new GNode(rootNode);
+	GNode *pNode_2 = new GNode("node_2");
+	GNode *pNode_3 = new GNode("node_3");
+	GNode *pNode_4 = new GNode("node_4");
+	GNode *pNode_5 = new GNode("node_5");
+
+	pNode_1->connect(pNode_2);
+	pNode_1->connect(pNode_3);
+	pNode_1->connect(pNode_4);
+	pNode_1->connect(pNode_5);
+	int connNodes = pNode_1->getNumConnectedTo();
+	ASSERT_EQUALS(connNodes, 4);
+	//create a node tracker object, append all node when they are created.
+	// at delete time, if node is not connected, RC_OK, if node is connected RC_Error
+
+	
+	
+
 }
 
 void TestObjectTracker::testGraphWithNodes()
