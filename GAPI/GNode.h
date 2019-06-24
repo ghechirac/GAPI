@@ -45,4 +45,5 @@ private:
     std::string m_name;
 	bool m_connected;
 	std::list<GNode> m_conn_Nodes;
+	bool containsNode(std::string name);
 };

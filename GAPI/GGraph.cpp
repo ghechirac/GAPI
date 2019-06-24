@@ -3,16 +3,17 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+//#include "GraphCounter.h"
 
 GGraph::GGraph(const std::string &iName)
 {
 	this->m_name = iName;
+	//GraphCounter::setNumGraph(this);
 }
 
 GGraph::~GGraph(void)
 {
 }
-
 
 GNode* GGraph::addNode(const std::string& iName)
 {

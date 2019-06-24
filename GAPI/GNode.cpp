@@ -18,7 +18,7 @@ ReturnCode GNode::connect(GNode *ipNode)
 	{
 		return rc;
 	}
-	if (ipNode->m_connected == true && ipNode->getName() == this->getName())
+	if (ipNode->m_connected == true && containsNode(ipNode->getName()))
 	{
 		rc = RC_ValueError;
 	}
@@ -78,4 +78,15 @@ int GNode::getNumConnectedTo()
 std::list<GNode> GNode::getConnectedNodes()
 {
 	return m_conn_Nodes;
+}
+bool GNode::containsNode(std::string name)
+{
+	for (auto itr = m_conn_Nodes.begin(); itr != m_conn_Nodes.end(); itr++)
+	{
+		if (itr->getName() == name)
+		{
+			return true;
+		}
+	}
+	return false;
 }

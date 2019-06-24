@@ -2,7 +2,7 @@
 
 #include "../GAPI/GNode.h"
 #include "../GAPI/GGraph.h"
-#include "../GAPI/GraphCounter.h"
+#include "../GAPI/GraphCounter.cpp"
 
 TestObjectTracker::TestObjectTracker(void)
 {
@@ -17,7 +17,7 @@ TestObjectTracker::~TestObjectTracker(void)
 void TestObjectTracker::run()
 {
     RUN_TEST(testNode);
-    RUN_TEST(testGraph);
+    //RUN_TEST(testGraph);
     //RUN_TEST(testNodeWithConnection);
     //RUN_TEST(testGraphWithNodes);
 }
@@ -58,12 +58,19 @@ void TestObjectTracker::testNode()
 
 void TestObjectTracker::testGraph()
 {
-    //TO BE IMPLEMENTED
+	//int graphCounter = GraphCounter::getNumGraph();
+
+	//GGraph *graph_1 = new GGraph("graph_1");
+	//GGraph *graph_2 = new GGraph("graph_2");
+
+	//int graphCounterAfterCreation = GraphCounter::getNumGraph();
+	//ASSERT_EQUALS(graphCounterAfterCreation,graphCounter+2);
+
 }
 
 void TestObjectTracker::testNodeWithConnection()
 {
-    //TO BE IMPLEMENTED
+	//TO BE IMPLEMENTED
 }
 
 void TestObjectTracker::testGraphWithNodes()
