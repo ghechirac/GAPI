@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     printf("GTest.exe\n");
 
     TestData testList[] = {
-       {"TestGraph", new TestGraph()},
+	   {"TestGraph", new TestGraph()},
        {"TestNode", new TestNode()},
        {"TestObjectTracker", new TestObjectTracker()},
         {"", 0}

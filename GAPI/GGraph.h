@@ -10,6 +10,19 @@ class GNode;
 /**
  * GGraph class represents a graph object which is used to group a number of nodes.
  */
+ class GAPI_API GraphCounter
+{
+	
+	 static int counter;
+	public:
+	
+	GraphCounter(void);
+	virtual ~GraphCounter(void);
+	static int GetCounter(void);
+	static void SetCounter(const int &iNumber);
+	
+	
+ };
 class GAPI_API GGraph
 {
 public:
@@ -46,8 +59,9 @@ public:
     //
     //Update the current state of the graph from given file
     //
-    ReturnCode load(const std::string& iFileName);
-    
+    GGraph* load(const std::string& iFileName);
+	void DelGraph(GGraph *iGraph);
+	bool CompareGraph(GGraph *iGraph);
 private:
 	std::list<GNode> m_graphNodes;
 	bool nodeNameInGraph(std::string name);

@@ -68,7 +68,6 @@ void TestGraph::testAddNode()
     pNode_na = pGraph->addNode("na");
     ASSERT_EQUALS(pNode_na, NULL);
     ASSERT_EQUALS(pGraph->getNumNodes(), numNodes + 1);
-    pGraph = NULL;
 }
 
 //
@@ -85,7 +84,6 @@ void TestGraph::testRemoveNode()
     
     ASSERT_EQUALS(pGraph->removeNode("na"), RC_OK);
     ASSERT_EQUALS(pGraph->getNumNodes(), numNodes - 1);
-    
     ASSERT_EQUALS(pGraph->removeNode("na"), RC_ValueError);
 }
 
@@ -108,30 +106,31 @@ void TestGraph::testSaveLoad()
 	GNode *pNode_4 = pGraph->addNode("node_4");
 	GNode *pNode_5 = pGraph->addNode("node_5");
 	
-	pGraph->getNode(pNode_1->getName())->connect(pNode_2);
-	pGraph->getNode(pNode_1->getName())->connect(pNode_3);
-	pGraph->getNode(pNode_1->getName())->connect(pNode_4);
-	pGraph->getNode(pNode_1->getName())->connect(pNode_5);
+	//pGraph->getNode(pNode_2->getName())
+	pGraph->getNode(pNode_1->getName())->connect(pGraph->getNode(pNode_2->getName()));
+	pGraph->getNode(pNode_1->getName())->connect(pGraph->getNode(pNode_3->getName()));
+	pGraph->getNode(pNode_1->getName())->connect(pGraph->getNode(pNode_4->getName()));
+	pGraph->getNode(pNode_1->getName())->connect(pGraph->getNode(pNode_5->getName()));
+	//pGraph->getNode(pNode_1->getName())
+	pGraph->getNode(pNode_2->getName())->connect(pGraph->getNode(pNode_1->getName()));
+	pGraph->getNode(pNode_2->getName())->connect(pGraph->getNode(pNode_3->getName()));
+	pGraph->getNode(pNode_2->getName())->connect(pGraph->getNode(pNode_4->getName()));
+	pGraph->getNode(pNode_2->getName())->connect(pGraph->getNode(pNode_5->getName()));
 
-	pGraph->getNode(pNode_2->getName())->connect(pNode_1);
-	pGraph->getNode(pNode_2->getName())->connect(pNode_3);
-	pGraph->getNode(pNode_2->getName())->connect(pNode_4);
-	pGraph->getNode(pNode_2->getName())->connect(pNode_5);
+	pGraph->getNode(pNode_3->getName())->connect(pGraph->getNode(pNode_2->getName()));
+	pGraph->getNode(pNode_3->getName())->connect(pGraph->getNode(pNode_1->getName()));
+	pGraph->getNode(pNode_3->getName())->connect(pGraph->getNode(pNode_4->getName()));
+	pGraph->getNode(pNode_3->getName())->connect(pGraph->getNode(pNode_5->getName()));
 
-	pGraph->getNode(pNode_3->getName())->connect(pNode_2);
-	pGraph->getNode(pNode_3->getName())->connect(pNode_1);
-	pGraph->getNode(pNode_3->getName())->connect(pNode_4);
-	pGraph->getNode(pNode_3->getName())->connect(pNode_5);
+	pGraph->getNode(pNode_4->getName())->connect(pGraph->getNode(pNode_2->getName()));
+	pGraph->getNode(pNode_4->getName())->connect(pGraph->getNode(pNode_3->getName()));
+	pGraph->getNode(pNode_4->getName())->connect(pGraph->getNode(pNode_1->getName()));
+	pGraph->getNode(pNode_4->getName())->connect(pGraph->getNode(pNode_5->getName()));
 
-	pGraph->getNode(pNode_4->getName())->connect(pNode_2);
-	pGraph->getNode(pNode_4->getName())->connect(pNode_3);
-	pGraph->getNode(pNode_4->getName())->connect(pNode_1);
-	pGraph->getNode(pNode_4->getName())->connect(pNode_5);
-
-	pGraph->getNode(pNode_5->getName())->connect(pNode_2);
-	pGraph->getNode(pNode_5->getName())->connect(pNode_3);
-	pGraph->getNode(pNode_5->getName())->connect(pNode_4);
-	pGraph->getNode(pNode_5->getName())->connect(pNode_1);
+	pGraph->getNode(pNode_5->getName())->connect(pGraph->getNode(pNode_1->getName()));
+	pGraph->getNode(pNode_5->getName())->connect(pGraph->getNode(pNode_2->getName()));
+	pGraph->getNode(pNode_5->getName())->connect(pGraph->getNode(pNode_3->getName()));
+	pGraph->getNode(pNode_5->getName())->connect(pGraph->getNode(pNode_4->getName()));
 
 	std::time_t t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::time_point::clock().now());
 
@@ -141,6 +140,8 @@ void TestGraph::testSaveLoad()
 	filename = filename + ".txt";
 
 	ASSERT_EQUALS(pGraph->save(filename) , RC_OK);
+	GGraph *loadedGraph = pGraph->load(filename);
 
-	ASSERT_EQUALS(pGraph->load(filename), RC_OK);
+	ASSERT_EQUALS(true,pGraph->CompareGraph(loadedGraph));
+
 }

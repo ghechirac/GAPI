@@ -1,13 +1,41 @@
 #include "GNode.h"
+	
+NodeCounter::NodeCounter(void)
+{
 
+}
 
+NodeCounter::~NodeCounter(void)
+{
+
+}
+
+	int NodeCounter::GetCounter()
+	{
+		return counter;
+	}
+	void NodeCounter::SetCounter(const int &iNumber)
+	{
+		if (iNumber > 0)
+		{
+			counter++;
+		}
+		else if (iNumber < 0)
+		{
+			counter--;
+		}
+	}
+int NodeCounter::counter;
 GNode::GNode(const std::string &iName)
 {
 	this->m_name = iName;
+	this->m_connected = false;
+	NodeCounter::SetCounter(1);
 }
 
 GNode::~GNode(void)
 {
+	
 }
 
 ReturnCode GNode::connect(GNode *ipNode)
@@ -25,9 +53,10 @@ ReturnCode GNode::connect(GNode *ipNode)
 	else
 	{
 		ipNode->m_connected = true;
+		this->m_connected = true;
 		m_conn_Nodes.push_back(*ipNode);
+		ipNode->m_conn_Nodes.push_back(*this);
 		rc = RC_OK;
-		this->m_conn_Nodes = m_conn_Nodes;
 	}
 
 	return rc;
@@ -48,14 +77,21 @@ ReturnCode GNode::disconnect(GNode *ipNode)
 	{
 			m_conn_Nodes.remove(*ipNode);
 			ipNode->m_connected = false;
-		rc = RC_OK;
+			ipNode->m_conn_Nodes.remove(*this);
+
+			if (m_conn_Nodes.size() == 0)
+			{
+				m_connected = false;
+			}
+			rc = RC_OK;
 	}
     return rc;
 }
 
 bool GNode::operator==(const GNode &other) const
 {
-	return (m_name == other.m_name && m_connected == other.m_connected && m_conn_Nodes == other.m_conn_Nodes);
+	//&& m_connected == other.m_connected && m_conn_Nodes == other.m_conn_Nodes
+	return (m_name == other.m_name);
 }
 
 ReturnCode GNode::disconnectAll()
@@ -89,4 +125,16 @@ bool GNode::containsNode(std::string name)
 		}
 	}
 	return false;
+}
+
+ReturnCode GNode::deleteNode(GNode *iNode)
+{
+	if (iNode != NULL  && iNode->m_connected == false)
+	{
+		iNode->~GNode();
+		iNode = nullptr;
+		NodeCounter::SetCounter(-1);
+		return RC_OK;
+	}
+	return RC_ValueError;
 }

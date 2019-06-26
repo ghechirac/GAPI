@@ -3,16 +3,49 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-//#include "GraphCounter.h"
+#include <list>
+#include <iterator>
 
+	//static int counter;
+	GraphCounter::GraphCounter(void)
+	{	
+		
+	}
+	
+	GraphCounter::~GraphCounter(void)
+	{
+		
+	}
+	
+	int GraphCounter::GetCounter()
+	{
+		return counter;
+	}
+
+	void GraphCounter::SetCounter(const int &iNumber)
+	{
+		if(iNumber > 0)
+		{
+			counter++;
+		}
+		else if (iNumber < 0)
+		{
+			counter--;
+		}
+
+	}
+int GraphCounter::counter;
 GGraph::GGraph(const std::string &iName)
 {
 	this->m_name = iName;
-	//GraphCounter::setNumGraph(this);
+	
+	GraphCounter::SetCounter(1);
 }
 
 GGraph::~GGraph(void)
 {
+	
+	GraphCounter::SetCounter(-1);
 }
 
 GNode* GGraph::addNode(const std::string& iName)
@@ -90,7 +123,7 @@ ReturnCode GGraph::save(const std::string& iFileName)
 	return RC_OK;
 }
 
-ReturnCode GGraph::load(const std::string& iFileName)
+GGraph* GGraph::load(const std::string& iFileName)
 {
 	std::string line;
 	std::ifstream myfile(iFileName);
@@ -99,13 +132,13 @@ ReturnCode GGraph::load(const std::string& iFileName)
 		GGraph *pGraph;
 		GNode *pParentNode;
 		while (getline(myfile, line))
-		{	
-			if(line.at(0) == '*')
+		{
+			if (line.at(0) == '*')
 			{
 				std::string graphName = line.substr(1, line.size());
 				pGraph = new GGraph(graphName);
 			}
-			else if(line.at(0) == '@')
+			else if (line.at(0) == '@')
 			{
 				std::string nodeName = line.substr(1, line.size());
 				pParentNode = pGraph->addNode(nodeName);
@@ -117,13 +150,8 @@ ReturnCode GGraph::load(const std::string& iFileName)
 			}
 		}
 		myfile.close();
-		if (pGraph != NULL && pGraph->m_graphNodes.size() > 0) 
-		{
-			return RC_OK;
-		}
+		return pGraph;
 	}
-	 return RC_ParameterError;
-	
 }
 
 int GGraph::getNumNodes()
@@ -142,8 +170,27 @@ bool GGraph::nodeNameInGraph(std::string name)
 	}
 	return false;
 }
+void GGraph::DelGraph(GGraph *iGraph)
+{
+	this->~GGraph();
+	iGraph = nullptr;
+}
 bool GGraph::operator==(const GGraph &other) const
 {
 	return (m_name == other.m_name && m_graphNodes == other.m_graphNodes);
 }
+bool GGraph::CompareGraph(GGraph *iGraph)
+{
+	if (*this == *iGraph)
+	{
+		//std::list<GNode>::sort(m_graphNodes);
+		/*m_graphNodes.sort();
+		iGraph->m_graphNodes.sort();*/
+		/*std::list<GNode> res;
+		std::set_difference(m_graphNodes.begin(), m_graphNodes.end(), iGraph->m_graphNodes.begin(), iGraph->m_graphNodes.end(),res);*/
+		return true;
+	}
+	return false;
+}
+
 

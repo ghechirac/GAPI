@@ -6,6 +6,17 @@
 #include <list>
 #include <vector>
 
+class GAPI_API NodeCounter
+{
+	static int counter;
+	
+	public:
+	NodeCounter(void);
+	virtual ~NodeCounter(void);
+	static int GetCounter(void);
+	static void SetCounter(const int &iNumber);
+};
+
 /**
  * GNode class represents a node in a given graph. Each node is 
  * identified by a unique name.
@@ -37,6 +48,8 @@ public:
     //Disconnect all connections of this node.
     //
     ReturnCode disconnectAll();
+	ReturnCode deleteNode(GNode *iNode);
+	
 
     //
     //Get number of nodes which this node connects to
