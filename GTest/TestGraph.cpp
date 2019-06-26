@@ -20,7 +20,7 @@ void TestGraph::run()
     RUN_TEST(testConstruct);
     RUN_TEST(testAddNode);
     RUN_TEST(testRemoveNode);
- 	//RUN_TEST(testNodeAccess);
+ 	RUN_TEST(testNodeAccess);
     RUN_TEST(testSaveLoad);
 }
 
@@ -93,7 +93,7 @@ void TestGraph::testNodeAccess()
 	GGraph *pGraph = new GGraph("ga");
 	ASSERT_EQUALS(pGraph->getNode("na"), NULL);
 	GNode *pNode = pGraph->addNode("na");
-	ASSERT_EQUALS(pGraph->getNode("na"), pNode);
+	ASSERT_EQUALS(pGraph->getNode("na") ,pGraph->getNode(pNode->getName()));
 }
 
 void TestGraph::testSaveLoad()

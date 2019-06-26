@@ -55,10 +55,10 @@ public:
     //Get number of nodes which this node connects to
     //
  
-	
+bool containsNode(std::string name);
 private:
     std::string m_name;
 	bool m_connected;
 	std::list<GNode> m_conn_Nodes;
-	bool containsNode(std::string name);
+	
 };

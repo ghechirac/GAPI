@@ -183,14 +183,28 @@ bool GGraph::CompareGraph(GGraph *iGraph)
 {
 	if (*this == *iGraph)
 	{
+		for (auto itr = this->m_graphNodes.begin(); itr != this->m_graphNodes.end(); itr++)
+		{
+			GNode* iGraphNode = iGraph->getNode(itr->getName());
+			if (iGraphNode != NULL)
+			{
+				std::list<GNode> childList = itr->getConnectedNodes();
+				for (auto itr_1 = childList.begin(); itr_1 != childList.end(); itr_1++)
+				{
+					if (!iGraphNode->containsNode(itr_1->getName()))
+					{
+						return false;
+					}
+				}
+			}
+		}
 		//std::list<GNode>::sort(m_graphNodes);
 		/*m_graphNodes.sort();
 		iGraph->m_graphNodes.sort();*/
 		/*std::list<GNode> res;
 		std::set_difference(m_graphNodes.begin(), m_graphNodes.end(), iGraph->m_graphNodes.begin(), iGraph->m_graphNodes.end(),res);*/
-		return true;
 	}
-	return false;
+	return true;
 }
 
 
