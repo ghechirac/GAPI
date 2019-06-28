@@ -65,6 +65,7 @@ ReturnCode GNode::connect(GNode *ipNode)
 ReturnCode GNode::disconnect(GNode *ipNode)
 {
 	ReturnCode rc = RC_ParameterError;
+	
 	if (ipNode == NULL) 
 	{
 		return rc;
@@ -75,7 +76,7 @@ ReturnCode GNode::disconnect(GNode *ipNode)
 	}
 	else
 	{
-			m_conn_Nodes.remove(*ipNode);
+			m_conn_Nodes.remove(*getNode(ipNode->getName()));
 			ipNode->m_connected = false;
 			ipNode->m_conn_Nodes.remove(*this);
 
@@ -90,8 +91,7 @@ ReturnCode GNode::disconnect(GNode *ipNode)
 
 bool GNode::operator==(const GNode &other) const
 {
-	//&& m_connected == other.m_connected && m_conn_Nodes == other.m_conn_Nodes
-	return (m_name == other.m_name);
+	return (m_name == other.m_name && m_conn_Nodes == other.m_conn_Nodes);
 }
 
 ReturnCode GNode::disconnectAll()
@@ -137,4 +137,16 @@ ReturnCode GNode::deleteNode(GNode *iNode)
 		return RC_OK;
 	}
 	return RC_ValueError;
+}
+
+GNode* GNode::getNode(const std::string& iName) 
+{
+	for (auto itr = m_conn_Nodes.begin(); itr != m_conn_Nodes.end(); itr++)
+	{
+		if (itr->getName() == iName)
+		{
+			return &*itr;
+		}
+	}
+	return NULL;
 }
