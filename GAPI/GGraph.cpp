@@ -142,11 +142,18 @@ GGraph* GGraph::load(const std::string& iFileName)
 			{
 				std::string nodeName = line.substr(1, line.size());
 				pParentNode = pGraph->addNode(nodeName);
+				if (pParentNode == NULL)
+				{
+					pParentNode = pGraph->getNode(nodeName);
+				}
 			}
 			else
 			{
-				GNode *tmpNode = new GNode(line);
-				pGraph->getNode(pParentNode->getName())->connect(tmpNode);
+				if (pGraph->nodeNameInGraph(line) == false)
+				{
+					GNode *tmpNode = pGraph->addNode(line);
+				}
+				pGraph->getNode(pParentNode->getName())->connect(pGraph->getNode(line));
 			}
 		}
 		myfile.close();
@@ -181,8 +188,6 @@ bool GGraph::operator==(const GGraph &other) const
 }
 bool GGraph::CompareGraph(GGraph *iGraph)
 {
-	///differences between connected nodes leads to errors: this.m_GraphNodes[1].m_conn_Nodes[0].m_conn_Nodes[0].size() ==1
-	//iGraph.m_GraphNodes[1].m_conn_Nodes[0].m_conn_Nodes[0].size() == 0
 	bool rc = false;
 	if (*this == *iGraph)
 	{
@@ -198,16 +203,10 @@ bool GGraph::CompareGraph(GGraph *iGraph)
 					if (!iGraphNode->containsNode(itr_1->getName()))
 					{
 						return false;
-						//return rc;;
 					}
 				}
 			}
 		}
-		//std::list<GNode>::sort(m_graphNodes);
-		/*m_graphNodes.sort();
-		iGraph->m_graphNodes.sort();*/
-		/*std::list<GNode> res;
-		std::set_difference(m_graphNodes.begin(), m_graphNodes.end(), iGraph->m_graphNodes.begin(), iGraph->m_graphNodes.end(),res);*/
 	}
 	return rc;
 }

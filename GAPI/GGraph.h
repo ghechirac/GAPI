@@ -61,7 +61,7 @@ public:
     //
     GGraph* load(const std::string& iFileName);
 	void DelGraph(GGraph *iGraph);
-	bool CompareGraph(GGraph *iGraph);
+	bool CompareGraph(GGraph *diskGraph);
 private:
 	std::list<GNode> m_graphNodes;
 	bool nodeNameInGraph(std::string name);

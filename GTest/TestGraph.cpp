@@ -140,8 +140,12 @@ void TestGraph::testSaveLoad()
 	filename = filename + ".txt";
 
 	ASSERT_EQUALS(pGraph->save(filename) , RC_OK);
+	
 	GGraph *loadedGraph = pGraph->load(filename);
 
 	ASSERT_EQUALS(true,pGraph->CompareGraph(loadedGraph));
+
+	GGraph *loadedGraph_wrong = pGraph->load("nokGraph.txt");
+	ASSERT_EQUALS(false, pGraph->CompareGraph(loadedGraph_wrong));
 
 }
